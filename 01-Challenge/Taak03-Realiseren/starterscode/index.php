@@ -1,6 +1,6 @@
 <?php
 // Je hebt een database nodig om dit bestand te gebruiken....
-
+include 'database.php';
 if (!isset($db_conn)) { //deze if-statement checked of er een database-object aanwezig is. Kun je laten staan.
     return;
 }
@@ -9,20 +9,20 @@ $database_gegevens = null;
 $poolIsChecked = false;
 $bathIsChecked = false;
 
-$sql = ""; //Selecteer alle huisjes uit de database
+$sql = "SELECT * FROM `homes`"; //Selecteer alle huisjes uit de database
 
 if (isset($_GET['filter_submit'])) {
 
     if ($_GET['faciliteiten'] == "ligbad") { // Als ligbad is geselecteerd filter dan de zoekresultaten
         $bathIsChecked = true;
 
-        $sql = ""; // query die zoekt of er een BAD aanwezig is.
+        $sql = "SELECT * FROM `homes` WHERE bath_present>0"; // query die zoekt of er een BAD aanwezig is.
     }
 
     if ($_GET['faciliteiten'] == "zwembad") {
         $poolIsChecked = true;
 
-        $sql = ""; // query die zoekt of er een ZWEMBAD aanwezig is.
+        $sql = "SELECT * FROM `homes` WHERE pool_present>0"; // query die zoekt of er een ZWEMBAD aanwezig is.
     }
 }
 
@@ -149,17 +149,33 @@ if (is_object($db_conn->query($sql))) { //deze if-statement controleert of een s
 
     </footer>
     <script src="js/map_init.js"></script>
+ 
     <script>
         // De verschillende markers moeten geplaatst worden. Vul de longitudes en latitudes uit de database hierin
-        var coordinates = [
+        var coordinates = [];
+        var bubbleTexts = [];
+
+         bubbleTexts.push("test locatie");
+      //  coordinates.push([52.28785, 4.83866]);  
 
 
-        ];
+        //if(isset($database_gegevens) && $database_gegevens != null) {
+            <?php foreach($database_gegevens as $cor) : ?>   
+                <?php 
+                     
+                    $decLong =  (float)$cor['longitude'];
+                      $decLat = (float)$cor['latitude'];
+                      $strCor= '['.$decLong.','.$decLat.']';
+                    ?>         
+                coordinates.push([<?php  echo $decLong ?>,<?php  echo $decLat ?>]);  
+              // coordinates.push([52.28785, 4.83866]); 
+                //bubbleTexts.push($cor['description']);
+            <?php endforeach; ?>
+            // coordinates.push([$cor['longitude'],$cor['latitude']]);  
+                
+        
+        
 
-        var bubbleTexts = [
-
-
-        ];
     </script>
     <script src="js/place_markers.js"></script>
 </body>
