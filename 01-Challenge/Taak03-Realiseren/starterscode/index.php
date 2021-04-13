@@ -12,7 +12,7 @@ $bathIsChecked = false;
 $sql = "SELECT * FROM `homes`"; //Selecteer alle huisjes uit de database
 
 if (isset($_GET['filter_submit'])) {
-
+    
     if ($_GET['faciliteiten'] == "ligbad") { // Als ligbad is geselecteerd filter dan de zoekresultaten
         $bathIsChecked = true;
 
@@ -85,7 +85,7 @@ if (is_object($db_conn->query($sql))) { //deze if-statement controleert of een s
             </div>
             <div class="currentBooking">
                 <div class="bookedHome"></div>
-                <div class="totalPriceBlock">Totale prijs &euro;<span class="totalPrice">0.00</span></div>
+                <div class="totalPriceBlock">Totale prijs &euro;<span class="totalPrice"><?php echo 0?></span></div>
             </div>
         </div>
         <div class="right">
@@ -110,9 +110,19 @@ if (is_object($db_conn->query($sql))) { //deze if-statement controleert of een s
                             <h4>
                                 <?php echo $huisje['name']; ?>
                             </h4>
-
+                                <?php
+                                      
+                                      
+                                      
+                                      
+                                      if($huisje['name']=="IJmuiden Cottage") $p = "IJmuiden_Cottage.jpg";
+                                      if($huisje['name']=="Weustenrade Woning") $p = "Weustenrade_Woning.jpg";
+                                      if($huisje['name']=="Assen Bungalow") $p = "Assen_Bungalow.jpg";
+                                      if($huisje['name']=="Espelo Entree") $p = "Espelo.jpg";
+                                ?>
+                                <img src= <?php echo $p; ?>
                             <p>
-                                <?php echo $huisje['description'] ?>
+                                <?php echo $huisje['description']; ?>
                             </p>
                             <div class="kenmerken">
                                 <h6>Kenmerken</h6>
@@ -154,8 +164,10 @@ if (is_object($db_conn->query($sql))) { //deze if-statement controleert of een s
         // De verschillende markers moeten geplaatst worden. Vul de longitudes en latitudes uit de database hierin
         var coordinates = [];
         var bubbleTexts = [];
+        var long,lat,text;
 
-         bubbleTexts.push("test locatie");
+
+         //bubbleTexts.push("test locatie");
       //  coordinates.push([52.28785, 4.83866]);  
 
 
@@ -165,9 +177,17 @@ if (is_object($db_conn->query($sql))) { //deze if-statement controleert of een s
                      
                     $decLong =  (float)$cor['longitude'];
                       $decLat = (float)$cor['latitude'];
+                      $text =   (string)$cor['description'];
+                      $arrCor = array($decLong,$decLat);
                       $strCor= '['.$decLong.','.$decLat.']';
-                    ?>         
-                coordinates.push([<?php  echo $decLong ?>,<?php  echo $decLat ?>]);  
+                    ?> 
+                lat = <?php echo (float)$decLat; ?>;
+                long = <?php echo (float)$decLong; ?>;
+                text = <?php echo "'{$text}'"; ?>;
+  
+                coordinates.push([lat, long]);
+                bubbleTexts.push(text);
+               //coordinates.push([<?php   //(float)$decLong; ?>, <?php   //(float)$decLat; ?>]);  
               // coordinates.push([52.28785, 4.83866]); 
                 //bubbleTexts.push($cor['description']);
             <?php endforeach; ?>
