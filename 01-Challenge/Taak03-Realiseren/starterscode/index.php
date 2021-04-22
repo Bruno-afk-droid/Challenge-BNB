@@ -73,7 +73,9 @@ function getDatabase_gegevens($sql){
     }
     return null;
 }
-$gekozen_huis = $_GET["gekozen_huis"];
+if(isset($_GET["gekozen_huis"])){
+    $gekozen_huis = $_GET["gekozen_huis"];
+}
 
 if(isset($_GET["aantal_personen"])){
     $personen = $_GET["aantal_personen"];
@@ -84,11 +86,11 @@ if(isset($_GET["aantal_dagen"])){
 if(isset($_GET["beddengoed"])){
     $beddengoed = $_GET["beddengoed"];
 }
-$sql = "SELECT * FROM `homes` WHERE `id`= 1 ";
-$D = getDatabase_gegevens($sql);
+$sql2 = "SELECT * FROM `homes` WHERE `name`= 'IJmuiden Cottage' ";
+$D = getDatabase_gegevens($sql2);
+if(isset($personen)&&isset($dagen))
 foreach ($D as $H) :
 $prijs=($H['price_p_p_p_n']*(int)$personen)*(int)$dagen;
-echo $prijs;
 endforeach;
 
 ?>
@@ -141,15 +143,12 @@ endforeach;
                     <label for="beddengoed_nee">Nee</label>
                     <input type="radio" id="beddengoed_nee" name="beddengoed" value="nee">
                 </div>
-                <?php 
-                    $totalprice = 0;
-                    $totalprice+= 0;
-                ?>
+
                 <button type="submit" name="Reserveer_submit">Reserveer huis</button>
             </div>
             <div class="currentBooking">
                 <div class="bookedHome"></div>
-                <div class="totalPriceBlock">Totale prijs &euro;<span class="totalPrice"><?php echo 0?></span></div>
+                <div class="totalPriceBlock">Totale prijs &euro;<span class="totalPrice"><?php if(isset($prijs)) echo $prijs; else echo 0;?></span></div>
             </div>
         </div>
         </form>
