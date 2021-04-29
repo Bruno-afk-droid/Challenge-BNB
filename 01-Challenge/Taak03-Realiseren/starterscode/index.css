@@ -4,6 +4,7 @@
 
 main {
     display: flex;
+    background-color: #2A9D8F;
 }
 
 main .left{
@@ -21,7 +22,7 @@ main .right {
 }
 
 footer {
-    display: flex;
+
     position: static;
     bottom: 0px;
     height: 100px;
@@ -37,15 +38,18 @@ footer div {
 }
 
 .filter-box label{
+    background-color: #F4A261;
     width: 100px;
     line-height: 1.8em;
 }
 
 .form-control{
+    background-color: #F4A261;
     line-height: 50px;
 }
 
 .form-control label{
+    background-color: #F4A261;
     letter-spacing: 0.15em;
 
 }

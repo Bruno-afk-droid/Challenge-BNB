@@ -11,6 +11,9 @@ $bathIsChecked = false;
 $bbqIsChecked = false;
 $wifiIsChecked = false;
 $fireplaceIsChecked = false; 
+$dishwasherIsChecked = false;
+$bicyclerentalIsChecked = false;
+$bicyclerentalPrice=0;
 
 
 $sql = "SELECT * FROM `homes` "; //Selecteer alle huisjes uit de database
@@ -54,6 +57,22 @@ if (isset($_GET['filter_submit'])) {
 
         if($i>0) $sql .= "AND ";
         $sql .= "fireplace_present>0 "; // query die zoekt of er een ZWEMBAD aanwezig is.
+        $i++;
+    }
+
+    if (isset($_GET['dishwasher'])) {
+        $dishwasherIsChecked = true;
+
+        if($i>0) $sql .= "AND ";
+        $sql .= "dishwasher_present>0 "; // query die zoekt of er een ZWEMBAD aanwezig is.
+        $i++;
+    }
+
+    if (isset($_GET['bicyclerental'])) {
+        $bicyclerentalIsChecked = true;
+
+        if($i>0) $sql .= "AND ";
+        $sql .= "bike_rental>0 "; // query die zoekt of er een ZWEMBAD aanwezig is.
         $i++;
     }
 
@@ -106,7 +125,7 @@ endforeach;
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
     <!-- Make sure you put this AFTER Leaflet's CSS -->
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
-    <link href="css/index.css" rel="stylesheet">
+    <link href="index.css" rel="stylesheet">
 </head>
 
 <body>
@@ -179,6 +198,14 @@ endforeach;
                         <label for="fireplace">fireplace</label>
                         <input type="checkbox" id="fireplace" name="fireplace" value="fireplace" <?php if ($fireplaceIsChecked) echo 'checked' ?>>
                     </div>
+                    <div class="form-control">
+                        <label for="dishwasher">dishwasher</label>
+                        <input type="checkbox" id="dishwasher" name="dishwasher" value="dishwasher" <?php if ($dishwasherIsChecked) echo 'checked' ?>>
+                    </div>
+                    <div class="form-control">
+                        <label for="bicyclerental">bicyclerental</label>
+                        <input type="checkbox" id="bicyclerental" name="bicyclerental" value="bicyclerental" <?php if ($bicyclerentalIsChecked) echo 'checked' ?>>
+                    </div>
     
                     <button type="submit" name="filter_submit">Filter</button>
                 </form>
@@ -235,6 +262,20 @@ endforeach;
                                     <?php
                                     if ($huisje['fireplace_present'] ==  1) {
                                         echo "<li>Er is een openhaard!</li>";
+                                    }
+                                    ?>
+
+                                    <?php
+                                    if ($huisje['dishwasher_present'] ==  1) {
+                                        echo "<li>Er is een vaatwasser!</li>";
+                                    }
+                                    ?>
+
+                                    <?php
+                                    if ($huisje['bike_rental'] ==  1) {
+                                        echo "<li>Er is een fietsen verhuur van &euro;";
+                                        echo $huisje['price_bike_rental'];
+                                        echo"</li>";
                                     }
                                     ?>
 
