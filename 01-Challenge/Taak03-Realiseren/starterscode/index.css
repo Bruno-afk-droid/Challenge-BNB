@@ -2,9 +2,12 @@
     height: 670px;
 }
 
+
+
 main {
     display: flex;
     background-color: #2A9D8F;
+    font-family: "Times New Roman", Times, serif;
 }
 
 main .left{
@@ -53,3 +56,4 @@ footer div {
     letter-spacing: 0.15em;
 
 }
+

@@ -105,13 +105,14 @@ if(isset($_GET["aantal_dagen"])){
 if(isset($_GET["beddengoed"])){
     $beddengoed = $_GET["beddengoed"];
 }
-$sql2 = "SELECT * FROM `homes` WHERE `name`= 'IJmuiden Cottage' ";
+
+$varD = $database_gegevens[$gekozen_huis-1]['name'];
+$sql2 = "SELECT * FROM `homes` WHERE `name`= '$varD' " ;
 $D = getDatabase_gegevens($sql2);
 if(isset($personen)&&isset($dagen))
 foreach ($D as $H) :
 $prijs=($H['price_p_p_p_n']*(int)$personen)*(int)$dagen;
 endforeach;
-
 ?>
 
 <!DOCTYPE html>
@@ -176,38 +177,37 @@ endforeach;
                 <form class="filter-form" method= "get">
                     <div class="form-control">
                         <a href="index.php">Reset Filters</a>
-                        <h1><?php echo $sql?></h1>
                     </div>
                     <div class="form-control">
-                        <label for="ligbad">Ligbad</label>
+                        <label for="ligbad" style="font-family:verdana;">Ligbad</label>
                         <input type="checkbox" id="ligbad" name="ligbad" value="ligbad" <?php if ($bathIsChecked) echo 'checked' ?>>
                     </div>
-                    <div class="form-control">
-                        <label for="zwembad">Zwembad</label>
+                    <div class="form-control" style="font-family:verdana;">
+                        <label for="zwembad" style="font-family:verdana;">Zwembad</label>
                         <input type="checkbox" id="zwembad" name="zwembad" value="zwembad" <?php if ($poolIsChecked) echo 'checked' ?>>
                     </div>
-                    <div class="form-control">
+                    <div class="form-control" style="font-family:verdana;">
                         <label for="bbq">bbq</label>
                         <input type="checkbox" id="bbq" name="bbq" value="bbq" <?php if ($bbqIsChecked) echo 'checked' ?>>
                     </div>
-                    <div class="form-control">
+                    <div class="form-control" style="font-family:verdana;">
                         <label for="wifi">wifi</label>
                         <input type="checkbox" id="wifi" name="wifi" value="wifi" <?php if ($wifiIsChecked) echo 'checked' ?>>
                     </div>
-                    <div class="form-control">
+                    <div class="form-control" style="font-family:verdana;">
                         <label for="fireplace">fireplace</label>
                         <input type="checkbox" id="fireplace" name="fireplace" value="fireplace" <?php if ($fireplaceIsChecked) echo 'checked' ?>>
                     </div>
-                    <div class="form-control">
+                    <div class="form-control" style="font-family:verdana;">
                         <label for="dishwasher">dishwasher</label>
                         <input type="checkbox" id="dishwasher" name="dishwasher" value="dishwasher" <?php if ($dishwasherIsChecked) echo 'checked' ?>>
                     </div>
-                    <div class="form-control">
+                    <div class="form-control" style="font-family:verdana;">
                         <label for="bicyclerental">bicyclerental</label>
                         <input type="checkbox" id="bicyclerental" name="bicyclerental" value="bicyclerental" <?php if ($bicyclerentalIsChecked) echo 'checked' ?>>
                     </div>
     
-                    <button type="submit" name="filter_submit">Filter</button>
+                    <button type="submit" name="filter_submit" style="font-family:verdana;">Filter</button>
                 </form>
                 <div class="homes-box">
                     <?php if (isset($database_gegevens) && $database_gegevens != null) : ?>
@@ -225,13 +225,14 @@ endforeach;
                                       if($huisje['name']=="Assen Bungalow") $p = "Assen_Bungalow.jpg";
                                       if($huisje['name']=="Espelo Entree") $p = "Espelo.jpg";
                                 ?>
-                                <img src= <?php echo $p; ?>
-                            <p>
+
+                                <img src= <?php echo $p; ?> width=500px height=250px >
+                            <p style="font-family:verdana;">
                                 <?php echo $huisje['description']; ?>
                             </p>
                             <div class="kenmerken">
-                                <h6>Kenmerken</h6>
-                                <ul>
+                                <h6 style="font-family:verdana;">Kenmerken</h6>
+                                <ul style="font-family:verdana;">
 
                                     <?php
                                     if ($huisje['bath_present'] ==  1) {
